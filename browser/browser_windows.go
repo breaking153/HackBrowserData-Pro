@@ -9,7 +9,7 @@ import (
 var (
 	chromiumList = map[string]struct {
 		name        string
-		profilePath string
+		profilePath []string
 		storage     string
 		dataTypes   []types.DataType
 	}{
@@ -63,9 +63,14 @@ var (
 			profilePath: yandexProfilePath,
 			dataTypes:   types.DefaultYandexTypes,
 		},
-		"360": {
+		"360Speed": {
 			name:        speed360Name,
 			profilePath: speed360ProfilePath,
+			dataTypes:   types.DefaultChromiumTypes,
+		},
+		"360se": {
+			name:        brwoser360seName,
+			profilePath: brwoser360seProfilePath,
 			dataTypes:   types.DefaultChromiumTypes,
 		},
 		"qq": {
@@ -99,20 +104,22 @@ var (
 )
 
 var (
-	chromeUserDataPath     = homeDir + "/AppData/Local/Google/Chrome/User Data/Default/"
-	chromeBetaUserDataPath = homeDir + "/AppData/Local/Google/Chrome Beta/User Data/Default/"
-	chromiumUserDataPath   = homeDir + "/AppData/Local/Chromium/User Data/Default/"
-	edgeProfilePath        = homeDir + "/AppData/Local/Microsoft/Edge/User Data/Default/"
-	braveProfilePath       = homeDir + "/AppData/Local/BraveSoftware/Brave-Browser/User Data/Default/"
-	speed360ProfilePath    = homeDir + "/AppData/Local/360chrome/Chrome/User Data/Default/"
-	qqBrowserProfilePath   = homeDir + "/AppData/Local/Tencent/QQBrowser/User Data/Default/"
-	operaProfilePath       = homeDir + "/AppData/Roaming/Opera Software/Opera Stable/"
-	operaGXProfilePath     = homeDir + "/AppData/Roaming/Opera Software/Opera GX Stable/"
-	vivaldiProfilePath     = homeDir + "/AppData/Local/Vivaldi/User Data/Default/"
-	coccocProfilePath      = homeDir + "/AppData/Local/CocCoc/Browser/User Data/Default/"
-	yandexProfilePath      = homeDir + "/AppData/Local/Yandex/YandexBrowser/User Data/Default/"
-	dcBrowserProfilePath   = homeDir + "/AppData/Local/DCBrowser/User Data/Default/"
-	sogouProfilePath       = homeDir + "/AppData/Roaming/SogouExplorer/Webkit/Default/"
+	chromeUserDataPath     = []string{homeDir + "/AppData/Local/Google/Chrome/User Data/Default/"}
+	chromeBetaUserDataPath = []string{homeDir + "/AppData/Local/Google/Chrome Beta/User Data/Default/"}
+	chromiumUserDataPath   = []string{homeDir + "/AppData/Local/Chromium/User Data/Default/"}
+	edgeProfilePath        = []string{homeDir + "/AppData/Local/Microsoft/Edge/User Data/Default/"}
+	braveProfilePath       = []string{homeDir + "/AppData/Local/BraveSoftware/Brave-Browser/User Data/Default/"}
+	speed360ProfilePath    = []string{homeDir + "/AppData/Local/360chrome/Chrome/User Data/Default/",
+		homeDir + "/AppData/Local/360chromeX/Chrome/User Data/Default/"}
+	brwoser360seProfilePath = []string{homeDir + "/AppData/Roaming/360se6/User Data/Default/"}
+	qqBrowserProfilePath    = []string{homeDir + "/AppData/Local/Tencent/QQBrowser/User Data/Default/"}
+	operaProfilePath        = []string{homeDir + "/AppData/Roaming/Opera Software/Opera Stable/"}
+	operaGXProfilePath      = []string{homeDir + "/AppData/Roaming/Opera Software/Opera GX Stable/"}
+	vivaldiProfilePath      = []string{homeDir + "/AppData/Local/Vivaldi/User Data/Default/"}
+	coccocProfilePath       = []string{homeDir + "/AppData/Local/CocCoc/Browser/User Data/Default/"}
+	yandexProfilePath       = []string{homeDir + "/AppData/Local/Yandex/YandexBrowser/User Data/Default/"}
+	dcBrowserProfilePath    = []string{homeDir + "/AppData/Local/DCBrowser/User Data/Default/"}
+	sogouProfilePath        = []string{homeDir + "/AppData/Roaming/SogouExplorer/Webkit/Default/"}
 
 	firefoxProfilePath = homeDir + "/AppData/Roaming/Mozilla/Firefox/Profiles/"
 )

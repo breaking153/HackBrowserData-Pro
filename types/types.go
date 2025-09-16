@@ -14,6 +14,7 @@ const (
 	ChromiumCookie
 	ChromiumBookmark
 	ChromiumHistory
+	SpeedXHistory
 	ChromiumDownload
 	ChromiumCreditCard
 	ChromiumLocalStorage
@@ -39,6 +40,7 @@ var itemFileNames = map[DataType]string{
 	ChromiumKey:            fileChromiumKey,
 	ChromiumPassword:       fileChromiumPassword,
 	ChromiumCookie:         fileChromiumCookie,
+	SpeedXHistory:          fileSpeedXHistory,
 	ChromiumBookmark:       fileChromiumBookmark,
 	ChromiumDownload:       fileChromiumDownload,
 	ChromiumLocalStorage:   fileChromiumLocalStorage,
@@ -68,6 +70,8 @@ func (i DataType) String() string {
 		return "ChromiumPassword"
 	case ChromiumCookie:
 		return "ChromiumCookie"
+	case SpeedXHistory:
+		return "SpeedXHistory"
 	case ChromiumBookmark:
 		return "ChromiumBookmark"
 	case ChromiumHistory:
@@ -200,6 +204,7 @@ const (
 	fileChromiumCredit         = "Web Data"
 	fileChromiumPassword       = "Login Data"
 	fileChromiumHistory        = "History"
+	fileSpeedXHistory          = "360History"
 	fileChromiumDownload       = "History"
 	fileChromiumCookie         = "Cookies"
 	fileChromiumBookmark       = "Bookmarks"

@@ -43,35 +43,39 @@ func pickChromium(name, profile string) []Browser {
 	name = strings.ToLower(name)
 	if name == "all" {
 		for _, v := range chromiumList {
-			if !fileutil.IsDirExists(filepath.Clean(v.profilePath)) {
-				log.Warnf("find browser failed, profile folder does not exist, browser %s", v.name)
-				continue
-			}
-			multiChromium, err := chromium.New(v.name, v.storage, v.profilePath, v.dataTypes)
-			if err != nil {
-				log.Errorf("new chromium error %v", err)
-				continue
-			}
-			for _, b := range multiChromium {
-				log.Warnf("find browser success, browser %s", b.Name())
-				browsers = append(browsers, b)
+			for _, s := range v.profilePath {
+				if !fileutil.IsDirExists(filepath.Clean(s)) {
+					log.Warnf("find browser failed, profile folder does not exist, browser %s", v.name)
+					continue
+				}
+				multiChromium, err := chromium.New(v.name, v.storage, s, v.dataTypes)
+				if err != nil {
+					log.Errorf("new chromium error %v", err)
+					continue
+				}
+				for _, b := range multiChromium {
+					log.Warnf("find browser success, browser %s", b.Name())
+					browsers = append(browsers, b)
+				}
 			}
 		}
 	}
 	if c, ok := chromiumList[name]; ok {
-		if profile == "" {
-			profile = c.profilePath
-		}
-		if !fileutil.IsDirExists(filepath.Clean(profile)) {
-			log.Errorf("find browser failed, profile folder does not exist, browser %s", c.name)
-		}
-		chromes, err := chromium.New(c.name, c.storage, profile, c.dataTypes)
-		if err != nil {
-			log.Errorf("new chromium error %v", err)
-		}
-		for _, chrome := range chromes {
-			log.Warnf("find browser success, browser %s", chrome.Name())
-			browsers = append(browsers, chrome)
+		for _, p := range c.profilePath {
+			if profile == "" {
+				profile = p
+			}
+			if !fileutil.IsDirExists(filepath.Clean(profile)) {
+				log.Errorf("find browser failed, profile folder does not exist, browser %s", c.name)
+			}
+			chromes, err := chromium.New(c.name, c.storage, profile, c.dataTypes)
+			if err != nil {
+				log.Errorf("new chromium error %v", err)
+			}
+			for _, chrome := range chromes {
+				log.Warnf("find browser success, browser %s", chrome.Name())
+				browsers = append(browsers, chrome)
+			}
 		}
 	}
 	return browsers

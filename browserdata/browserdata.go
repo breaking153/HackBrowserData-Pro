@@ -20,6 +20,9 @@ func New(items []types.DataType) *BrowserData {
 }
 
 func (d *BrowserData) Recovery(masterKey []byte) error {
+	// masterkey hex编码为string
+	//hexString := hex.EncodeToString(masterKey)
+	//println(hexString)
 	for _, source := range d.extractors {
 		if err := source.Extract(masterKey); err != nil {
 			log.Debugf("parse %s error: %v", source.Name(), err)
