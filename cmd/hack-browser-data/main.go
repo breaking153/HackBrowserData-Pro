@@ -56,6 +56,8 @@ func Execute() {
 					continue
 				}
 				data.Output(outputDir, b.Name(), outputFormat)
+				output := data.ToBrowserOutput()
+				output.PrinttoStr()
 			}
 
 			if compress {

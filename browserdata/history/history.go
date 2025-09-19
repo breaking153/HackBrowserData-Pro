@@ -24,9 +24,9 @@ func init() {
 	})
 }
 
-type ChromiumHistory []history
+type ChromiumHistory []History
 
-type history struct {
+type History struct {
 	Title         string
 	URL           string
 	VisitCount    int
@@ -57,9 +57,9 @@ func (c *ChromiumHistory) Extract(_ []byte) error {
 			lastVisitTime int64
 		)
 		if err := rows.Scan(&url, &title, &visitCount, &lastVisitTime); err != nil {
-			log.Warnf("scan chromium history error: %v", err)
+			log.Warnf("scan chromium History error: %v", err)
 		}
-		data := history{
+		data := History{
 			URL:           url,
 			Title:         title,
 			VisitCount:    visitCount,
@@ -74,14 +74,14 @@ func (c *ChromiumHistory) Extract(_ []byte) error {
 }
 
 func (c *ChromiumHistory) Name() string {
-	return "history"
+	return "History"
 }
 
 func (c *ChromiumHistory) Len() int {
 	return len(*c)
 }
 
-type FirefoxHistory []history
+type FirefoxHistory []History
 
 const (
 	queryFirefoxHistory = `SELECT id, url, COALESCE(last_visit_date, 0), COALESCE(title, ''), visit_count FROM moz_places`
@@ -113,9 +113,9 @@ func (f *FirefoxHistory) Extract(_ []byte) error {
 			visitCount    int
 		)
 		if err = rows.Scan(&id, &url, &visitDate, &title, &visitCount); err != nil {
-			log.Debugf("scan firefox history error: %v", err)
+			log.Debugf("scan firefox History error: %v", err)
 		}
-		*f = append(*f, history{
+		*f = append(*f, History{
 			Title:         title,
 			URL:           url,
 			VisitCount:    visitCount,
@@ -129,7 +129,7 @@ func (f *FirefoxHistory) Extract(_ []byte) error {
 }
 
 func (f *FirefoxHistory) Name() string {
-	return "history"
+	return "History"
 }
 
 func (f *FirefoxHistory) Len() int {

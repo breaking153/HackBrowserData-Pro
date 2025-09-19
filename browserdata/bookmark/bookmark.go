@@ -25,9 +25,9 @@ func init() {
 	})
 }
 
-type ChromiumBookmark []bookmark
+type ChromiumBookmark []Bookmark
 
-type bookmark struct {
+type Bookmark struct {
 	ID        int64
 	Name      string
 	Type      string
@@ -69,7 +69,7 @@ func getBookmarkChildren(value gjson.Result, w *ChromiumBookmark) (children gjso
 	nodeType := value.Get(bookmarkType)
 	children = value.Get(bookmarkChildren)
 
-	bm := bookmark{
+	bm := Bookmark{
 		ID:        value.Get(bookmarkID).Int(),
 		Name:      value.Get(bookmarkName).String(),
 		URL:       value.Get(bookmarkURL).String(),
@@ -88,14 +88,14 @@ func getBookmarkChildren(value gjson.Result, w *ChromiumBookmark) (children gjso
 }
 
 func (c *ChromiumBookmark) Name() string {
-	return "bookmark"
+	return "Bookmark"
 }
 
 func (c *ChromiumBookmark) Len() int {
 	return len(*c)
 }
 
-type FirefoxBookmark []bookmark
+type FirefoxBookmark []Bookmark
 
 const (
 	queryFirefoxBookMark = `SELECT id, url, type, dateAdded, title FROM (SELECT * FROM moz_bookmarks INNER JOIN moz_places ON moz_bookmarks.fk=moz_places.id)`
@@ -124,9 +124,9 @@ func (f *FirefoxBookmark) Extract(_ []byte) error {
 			title, url        string
 		)
 		if err = rows.Scan(&id, &url, &bt, &dateAdded, &title); err != nil {
-			log.Debugf("scan bookmark error: %v", err)
+			log.Debugf("scan Bookmark error: %v", err)
 		}
-		*f = append(*f, bookmark{
+		*f = append(*f, Bookmark{
 			ID:        id,
 			Name:      title,
 			Type:      linkType(bt),
@@ -141,7 +141,7 @@ func (f *FirefoxBookmark) Extract(_ []byte) error {
 }
 
 func (f *FirefoxBookmark) Name() string {
-	return "bookmark"
+	return "Bookmark"
 }
 
 func (f *FirefoxBookmark) Len() int {

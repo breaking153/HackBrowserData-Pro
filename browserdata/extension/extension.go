@@ -22,9 +22,9 @@ func init() {
 	})
 }
 
-type ChromiumExtension []*extension
+type ChromiumExtension []*Extension
 
-type extension struct {
+type Extension struct {
 	ID          string
 	URL         string
 	Enabled     bool
@@ -49,7 +49,7 @@ func (c *ChromiumExtension) Extract(_ []byte) error {
 	return nil
 }
 
-func parseChromiumExtensions(content string) ([]*extension, error) {
+func parseChromiumExtensions(content string) ([]*Extension, error) {
 	settingKeys := []string{
 		"settings.extensions",
 		"settings.settings",
@@ -65,7 +65,7 @@ func parseChromiumExtensions(content string) ([]*extension, error) {
 	if !settings.Exists() {
 		return nil, fmt.Errorf("cannot find extensions in settings")
 	}
-	var c []*extension
+	var c []*Extension
 
 	settings.ForEach(func(id, ext gjson.Result) bool {
 		location := ext.Get("location")
@@ -80,14 +80,14 @@ func parseChromiumExtensions(content string) ([]*extension, error) {
 		enabled := !ext.Get("disable_reasons").Exists()
 		b := ext.Get("manifest")
 		if !b.Exists() {
-			c = append(c, &extension{
+			c = append(c, &Extension{
 				ID:      id.String(),
 				Enabled: enabled,
 				Name:    ext.Get("path").String(),
 			})
 			return true
 		}
-		c = append(c, &extension{
+		c = append(c, &Extension{
 			ID:          id.String(),
 			URL:         getChromiumExtURL(id.String(), b.Get("update_url").String()),
 			Enabled:     enabled,
@@ -112,14 +112,14 @@ func getChromiumExtURL(id, updateURL string) string {
 }
 
 func (c *ChromiumExtension) Name() string {
-	return "extension"
+	return "Extension"
 }
 
 func (c *ChromiumExtension) Len() int {
 	return len(*c)
 }
 
-type FirefoxExtension []*extension
+type FirefoxExtension []*Extension
 
 var lang = language.Und
 
@@ -138,7 +138,7 @@ func (f *FirefoxExtension) Extract(_ []byte) error {
 
 		if lang != language.Und {
 			locale := findFirefoxLocale(v.Get("locales").Array(), lang)
-			*f = append(*f, &extension{
+			*f = append(*f, &Extension{
 				ID:          v.Get("id").String(),
 				Enabled:     v.Get("active").Bool(),
 				Name:        locale.Get("name").String(),
@@ -149,7 +149,7 @@ func (f *FirefoxExtension) Extract(_ []byte) error {
 			continue
 		}
 
-		*f = append(*f, &extension{
+		*f = append(*f, &Extension{
 			ID:          v.Get("id").String(),
 			Enabled:     v.Get("active").Bool(),
 			Name:        v.Get("defaultLocale.name").String(),
@@ -179,7 +179,7 @@ func findFirefoxLocale(locales []gjson.Result, targetLang language.Tag) gjson.Re
 }
 
 func (f *FirefoxExtension) Name() string {
-	return "extension"
+	return "Extension"
 }
 
 func (f *FirefoxExtension) Len() int {

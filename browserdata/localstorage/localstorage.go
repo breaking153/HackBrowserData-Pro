@@ -27,9 +27,9 @@ func init() {
 	})
 }
 
-type ChromiumLocalStorage []storage
+type ChromiumLocalStorage []Storage
 
-type storage struct {
+type Storage struct {
 	IsMeta bool
 	URL    string
 	Key    string
@@ -50,7 +50,7 @@ func (c *ChromiumLocalStorage) Extract(_ []byte) error {
 	for iter.Next() {
 		key := iter.Key()
 		value := iter.Value()
-		s := new(storage)
+		s := new(Storage)
 		s.fillKey(key)
 		// don't all value upper than 2KB
 		if len(value) < maxLocalStorageValueLength {
@@ -76,7 +76,7 @@ func (c *ChromiumLocalStorage) Len() int {
 	return len(*c)
 }
 
-func (s *storage) fillKey(b []byte) {
+func (s *Storage) fillKey(b []byte) {
 	keys := bytes.Split(b, []byte("\x00"))
 	if len(keys) == 1 && bytes.HasPrefix(keys[0], []byte("META:")) {
 		s.IsMeta = true
@@ -87,11 +87,11 @@ func (s *storage) fillKey(b []byte) {
 	}
 }
 
-func (s *storage) fillMetaHeader(b []byte) {
+func (s *Storage) fillMetaHeader(b []byte) {
 	s.URL = string(bytes.Trim(b, "META:"))
 }
 
-func (s *storage) fillHeader(url, key []byte) {
+func (s *Storage) fillHeader(url, key []byte) {
 	s.URL = string(bytes.Trim(url, "_"))
 	s.Key = string(bytes.Trim(key, "\x01"))
 }
@@ -101,14 +101,14 @@ func convertUTF16toUTF8(source []byte, endian unicode.Endianness) ([]byte, error
 	return r, err
 }
 
-// fillValue fills value of the storage
+// fillValue fills value of the Storage
 // TODO: support unicode charter
-func (s *storage) fillValue(b []byte) {
+func (s *Storage) fillValue(b []byte) {
 	value := bytes.Map(byteutil.OnSplitUTF8Func, b)
 	s.Value = string(value)
 }
 
-type FirefoxLocalStorage []storage
+type FirefoxLocalStorage []Storage
 
 const (
 	queryLocalStorage = `SELECT originKey, key, value FROM webappsstore2`
@@ -135,16 +135,16 @@ func (f *FirefoxLocalStorage) Extract(_ []byte) error {
 	for rows.Next() {
 		var originKey, key, value string
 		if err = rows.Scan(&originKey, &key, &value); err != nil {
-			log.Debugf("scan firefox local storage error: %v", err)
+			log.Debugf("scan firefox local Storage error: %v", err)
 		}
-		s := new(storage)
+		s := new(Storage)
 		s.fillFirefox(originKey, key, value)
 		*f = append(*f, *s)
 	}
 	return nil
 }
 
-func (s *storage) fillFirefox(originKey, key, value string) {
+func (s *Storage) fillFirefox(originKey, key, value string) {
 	// originKey = moc.buhtig.:https:443
 	p := strings.Split(originKey, ":")
 	h := typeutil.Reverse([]byte(p[0]))

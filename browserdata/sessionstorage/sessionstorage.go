@@ -27,9 +27,9 @@ func init() {
 	})
 }
 
-type ChromiumSessionStorage []session
+type ChromiumSessionStorage []Session
 
-type session struct {
+type Session struct {
 	IsMeta bool
 	URL    string
 	Key    string
@@ -50,7 +50,7 @@ func (c *ChromiumSessionStorage) Extract(_ []byte) error {
 	for iter.Next() {
 		key := iter.Key()
 		value := iter.Value()
-		s := new(session)
+		s := new(Session)
 		s.fillKey(key)
 		// don't all value upper than 2KB
 		if len(value) < maxLocalStorageValueLength {
@@ -76,7 +76,7 @@ func (c *ChromiumSessionStorage) Len() int {
 	return len(*c)
 }
 
-func (s *session) fillKey(b []byte) {
+func (s *Session) fillKey(b []byte) {
 	keys := bytes.Split(b, []byte("-"))
 	if len(keys) == 1 && bytes.HasPrefix(keys[0], []byte("META:")) {
 		s.IsMeta = true
@@ -95,11 +95,11 @@ func (s *session) fillKey(b []byte) {
 	}
 }
 
-func (s *session) fillMetaHeader(b []byte) {
+func (s *Session) fillMetaHeader(b []byte) {
 	s.URL = string(bytes.Trim(b, "META:"))
 }
 
-func (s *session) fillHeader(url, key []byte) {
+func (s *Session) fillHeader(url, key []byte) {
 	s.URL = string(bytes.Trim(url, "_"))
 	s.Key = string(bytes.Trim(key, "\x01"))
 }
@@ -111,12 +111,12 @@ func convertUTF16toUTF8(source []byte, endian unicode.Endianness) ([]byte, error
 
 // fillValue fills value of the storage
 // TODO: support unicode charter
-func (s *session) fillValue(b []byte) {
+func (s *Session) fillValue(b []byte) {
 	value := bytes.Map(byteutil.OnSplitUTF8Func, b)
 	s.Value = string(value)
 }
 
-type FirefoxSessionStorage []session
+type FirefoxSessionStorage []Session
 
 const (
 	querySessionStorage = `SELECT originKey, key, value FROM webappsstore2`
@@ -143,16 +143,16 @@ func (f *FirefoxSessionStorage) Extract(_ []byte) error {
 	for rows.Next() {
 		var originKey, key, value string
 		if err = rows.Scan(&originKey, &key, &value); err != nil {
-			log.Debugf("scan session storage error: %v", err)
+			log.Debugf("scan Session storage error: %v", err)
 		}
-		s := new(session)
+		s := new(Session)
 		s.fillFirefox(originKey, key, value)
 		*f = append(*f, *s)
 	}
 	return nil
 }
 
-func (s *session) fillFirefox(originKey, key, value string) {
+func (s *Session) fillFirefox(originKey, key, value string) {
 	// originKey = moc.buhtig.:https:443
 	p := strings.Split(originKey, ":")
 	h := typeutil.Reverse([]byte(p[0]))

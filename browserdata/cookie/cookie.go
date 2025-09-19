@@ -25,9 +25,9 @@ func init() {
 	})
 }
 
-type ChromiumCookie []cookie
+type ChromiumCookie []Cookie
 
-type cookie struct {
+type Cookie struct {
 	Host         string
 	Path         string
 	KeyName      string
@@ -65,10 +65,10 @@ func (c *ChromiumCookie) Extract(masterKey []byte) error {
 			value, encryptValue                           []byte
 		)
 		if err = rows.Scan(&key, &encryptValue, &host, &path, &createDate, &expireDate, &isSecure, &isHTTPOnly, &hasExpire, &isPersistent); err != nil {
-			log.Debugf("scan chromium cookie error: %v", err)
+			log.Debugf("scan chromium Cookie error: %v", err)
 		}
 
-		cookie := cookie{
+		cookie := Cookie{
 			KeyName:      key,
 			Host:         host,
 			Path:         path,
@@ -86,7 +86,7 @@ func (c *ChromiumCookie) Extract(masterKey []byte) error {
 			if err != nil {
 				value, err = crypto.DecryptWithChromium(masterKey, encryptValue)
 				if err != nil {
-					log.Debugf("decrypt chromium cookie error: %v", err)
+					log.Debugf("decrypt chromium Cookie error: %v", err)
 				}
 			}
 		}
@@ -101,14 +101,14 @@ func (c *ChromiumCookie) Extract(masterKey []byte) error {
 }
 
 func (c *ChromiumCookie) Name() string {
-	return "cookie"
+	return "Cookie"
 }
 
 func (c *ChromiumCookie) Len() int {
 	return len(*c)
 }
 
-type FirefoxCookie []cookie
+type FirefoxCookie []Cookie
 
 const (
 	queryFirefoxCookie = `SELECT name, value, host, path, creationTime, expiry, isSecure, isHttpOnly FROM moz_cookies`
@@ -134,9 +134,9 @@ func (f *FirefoxCookie) Extract(_ []byte) error {
 			creationTime, expiry    int64
 		)
 		if err = rows.Scan(&name, &value, &host, &path, &creationTime, &expiry, &isSecure, &isHTTPOnly); err != nil {
-			log.Debugf("scan firefox cookie error: %v", err)
+			log.Debugf("scan firefox Cookie error: %v", err)
 		}
-		*f = append(*f, cookie{
+		*f = append(*f, Cookie{
 			KeyName:    name,
 			Host:       host,
 			Path:       path,
@@ -155,7 +155,7 @@ func (f *FirefoxCookie) Extract(_ []byte) error {
 }
 
 func (f *FirefoxCookie) Name() string {
-	return "cookie"
+	return "Cookie"
 }
 
 func (f *FirefoxCookie) Len() int {

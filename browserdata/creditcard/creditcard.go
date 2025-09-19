@@ -21,9 +21,9 @@ func init() {
 	})
 }
 
-type ChromiumCreditCard []card
+type ChromiumCreditCard []Card
 
-type card struct {
+type Card struct {
 	GUID            string
 	Name            string
 	ExpirationYear  string
@@ -56,9 +56,9 @@ func (c *ChromiumCreditCard) Extract(masterKey []byte) error {
 			value, encryptValue                        []byte
 		)
 		if err := rows.Scan(&guid, &name, &month, &year, &encryptValue, &address, &nickname); err != nil {
-			log.Debugf("scan chromium credit card error: %v", err)
+			log.Debugf("scan chromium credit Card error: %v", err)
 		}
-		ccInfo := card{
+		ccInfo := Card{
 			GUID:            guid,
 			Name:            name,
 			ExpirationMonth: month,
@@ -73,7 +73,7 @@ func (c *ChromiumCreditCard) Extract(masterKey []byte) error {
 				value, err = crypto.DecryptWithChromium(masterKey, encryptValue)
 			}
 			if err != nil {
-				log.Debugf("decrypt chromium credit card error: %v", err)
+				log.Debugf("decrypt chromium credit Card error: %v", err)
 			}
 		}
 
@@ -91,7 +91,7 @@ func (c *ChromiumCreditCard) Len() int {
 	return len(*c)
 }
 
-type YandexCreditCard []card
+type YandexCreditCard []Card
 
 func (c *YandexCreditCard) Extract(masterKey []byte) error {
 	db, err := sql.Open("sqlite", types.YandexCreditCard.TempFilename())
@@ -111,9 +111,9 @@ func (c *YandexCreditCard) Extract(masterKey []byte) error {
 			value, encryptValue                        []byte
 		)
 		if err := rows.Scan(&guid, &name, &month, &year, &encryptValue, &address, &nickname); err != nil {
-			log.Debugf("scan chromium credit card error: %v", err)
+			log.Debugf("scan chromium credit Card error: %v", err)
 		}
-		ccInfo := card{
+		ccInfo := Card{
 			GUID:            guid,
 			Name:            name,
 			ExpirationMonth: month,
@@ -128,7 +128,7 @@ func (c *YandexCreditCard) Extract(masterKey []byte) error {
 				value, err = crypto.DecryptWithChromium(masterKey, encryptValue)
 			}
 			if err != nil {
-				log.Debugf("decrypt chromium credit card error: %v", err)
+				log.Debugf("decrypt chromium credit Card error: %v", err)
 			}
 		}
 		ccInfo.CardNumber = string(value)

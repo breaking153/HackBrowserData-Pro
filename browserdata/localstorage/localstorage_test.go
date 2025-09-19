@@ -26,7 +26,7 @@ func TestLocalStorageKeyToUTF8(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		// TODO: fix this, value from local storage if contains chinese characters, need convert utf16 to utf8
+
 		// but now, it can't convert, so just skip it.
 		assert.Equal(t, tc.actual, actual, "chinese characters can't actual convert")
 	}

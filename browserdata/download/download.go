@@ -25,9 +25,9 @@ func init() {
 	})
 }
 
-type ChromiumDownload []download
+type ChromiumDownload []Download
 
-type download struct {
+type Download struct {
 	TargetPath string
 	URL        string
 	TotalBytes int64
@@ -58,9 +58,9 @@ func (c *ChromiumDownload) Extract(_ []byte) error {
 			totalBytes, startTime, endTime int64
 		)
 		if err := rows.Scan(&targetPath, &tabURL, &totalBytes, &startTime, &endTime, &mimeType); err != nil {
-			log.Warnf("scan chromium download error: %v", err)
+			log.Warnf("scan chromium Download error: %v", err)
 		}
-		data := download{
+		data := Download{
 			TargetPath: targetPath,
 			URL:        tabURL,
 			TotalBytes: totalBytes,
@@ -77,14 +77,14 @@ func (c *ChromiumDownload) Extract(_ []byte) error {
 }
 
 func (c *ChromiumDownload) Name() string {
-	return "download"
+	return "Download"
 }
 
 func (c *ChromiumDownload) Len() int {
 	return len(*c)
 }
 
-type FirefoxDownload []download
+type FirefoxDownload []Download
 
 const (
 	queryFirefoxDownload = `SELECT place_id, GROUP_CONCAT(content), url, dateAdded FROM (SELECT * FROM moz_annos INNER JOIN moz_places ON moz_annos.place_id=moz_places.id) t GROUP BY place_id`
@@ -114,7 +114,7 @@ func (f *FirefoxDownload) Extract(_ []byte) error {
 			placeID, dateAdded int64
 		)
 		if err = rows.Scan(&placeID, &content, &url, &dateAdded); err != nil {
-			log.Warnf("scan firefox download error: %v", err)
+			log.Warnf("scan firefox Download error: %v", err)
 		}
 		contentList := strings.Split(content, ",{")
 		if len(contentList) > 1 {
@@ -122,7 +122,7 @@ func (f *FirefoxDownload) Extract(_ []byte) error {
 			json := "{" + contentList[1]
 			endTime := gjson.Get(json, "endTime")
 			fileSize := gjson.Get(json, "fileSize")
-			*f = append(*f, download{
+			*f = append(*f, Download{
 				TargetPath: path,
 				URL:        url,
 				TotalBytes: fileSize.Int(),
@@ -138,7 +138,7 @@ func (f *FirefoxDownload) Extract(_ []byte) error {
 }
 
 func (f *FirefoxDownload) Name() string {
-	return "download"
+	return "Download"
 }
 
 func (f *FirefoxDownload) Len() int {

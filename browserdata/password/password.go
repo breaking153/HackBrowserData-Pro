@@ -29,9 +29,9 @@ func init() {
 	})
 }
 
-type ChromiumPassword []loginData
+type ChromiumPassword []LoginData
 
-type loginData struct {
+type LoginData struct {
 	UserName    string
 	encryptPass []byte
 	encryptUser []byte
@@ -67,7 +67,7 @@ func (c *ChromiumPassword) Extract(masterKey []byte) error {
 		if err := rows.Scan(&url, &username, &pwd, &create); err != nil {
 			log.Debugf("scan chromium password error: %v", err)
 		}
-		login := loginData{
+		login := LoginData{
 			UserName:    username,
 			encryptPass: pwd,
 			LoginURL:    url,
@@ -106,7 +106,7 @@ func (c *ChromiumPassword) Len() int {
 	return len(*c)
 }
 
-type YandexPassword []loginData
+type YandexPassword []LoginData
 
 const (
 	queryYandexLogin = `SELECT action_url, username_value, password_value, date_created FROM logins`
@@ -135,7 +135,7 @@ func (c *YandexPassword) Extract(masterKey []byte) error {
 		if err := rows.Scan(&url, &username, &pwd, &create); err != nil {
 			log.Debugf("scan yandex password error: %v", err)
 		}
-		login := loginData{
+		login := LoginData{
 			UserName:    username,
 			encryptPass: pwd,
 			LoginURL:    url,
@@ -174,7 +174,7 @@ func (c *YandexPassword) Len() int {
 	return len(*c)
 }
 
-type FirefoxPassword []loginData
+type FirefoxPassword []LoginData
 
 func (f *FirefoxPassword) Extract(globalSalt []byte) error {
 	logins, err := getFirefoxLoginData()
@@ -199,7 +199,7 @@ func (f *FirefoxPassword) Extract(globalSalt []byte) error {
 		if err != nil {
 			return err
 		}
-		*f = append(*f, loginData{
+		*f = append(*f, LoginData{
 			LoginURL:   v.LoginURL,
 			UserName:   string(user),
 			Password:   string(pwd),
@@ -213,18 +213,18 @@ func (f *FirefoxPassword) Extract(globalSalt []byte) error {
 	return nil
 }
 
-func getFirefoxLoginData() ([]loginData, error) {
+func getFirefoxLoginData() ([]LoginData, error) {
 	s, err := os.ReadFile(types.FirefoxPassword.TempFilename())
 	if err != nil {
 		return nil, err
 	}
 	defer os.Remove(types.FirefoxPassword.TempFilename())
 	loginsJSON := gjson.GetBytes(s, "logins")
-	var logins []loginData
+	var logins []LoginData
 	if loginsJSON.Exists() {
 		for _, v := range loginsJSON.Array() {
 			var (
-				m    loginData
+				m    LoginData
 				user []byte
 				pass []byte
 			)
