@@ -9,7 +9,7 @@ import (
 	"strings"
 	"sync/atomic"
 
-	"github.com/moond4rk/hackbrowserdata/log/level"
+	"github.com/breaking153/HackBrowserData-Pro/log/level"
 )
 
 // NewLogger creates and returns a new instance of Logger.

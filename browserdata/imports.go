@@ -8,13 +8,13 @@
 package browserdata
 
 import (
-	_ "github.com/moond4rk/hackbrowserdata/browserdata/bookmark"
-	_ "github.com/moond4rk/hackbrowserdata/browserdata/cookie"
-	_ "github.com/moond4rk/hackbrowserdata/browserdata/creditcard"
-	_ "github.com/moond4rk/hackbrowserdata/browserdata/download"
-	_ "github.com/moond4rk/hackbrowserdata/browserdata/extension"
-	_ "github.com/moond4rk/hackbrowserdata/browserdata/history"
-	_ "github.com/moond4rk/hackbrowserdata/browserdata/localstorage"
-	_ "github.com/moond4rk/hackbrowserdata/browserdata/password"
-	_ "github.com/moond4rk/hackbrowserdata/browserdata/sessionstorage"
+	_ "github.com/breaking153/HackBrowserData-Pro/browserdata/bookmark"
+	_ "github.com/breaking153/HackBrowserData-Pro/browserdata/cookie"
+	_ "github.com/breaking153/HackBrowserData-Pro/browserdata/creditcard"
+	_ "github.com/breaking153/HackBrowserData-Pro/browserdata/download"
+	_ "github.com/breaking153/HackBrowserData-Pro/browserdata/extension"
+	_ "github.com/breaking153/HackBrowserData-Pro/browserdata/history"
+	_ "github.com/breaking153/HackBrowserData-Pro/browserdata/localstorage"
+	_ "github.com/breaking153/HackBrowserData-Pro/browserdata/password"
+	_ "github.com/breaking153/HackBrowserData-Pro/browserdata/sessionstorage"
 )

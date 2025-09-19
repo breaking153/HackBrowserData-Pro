@@ -5,12 +5,12 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/moond4rk/hackbrowserdata/browser/chromium"
-	"github.com/moond4rk/hackbrowserdata/browser/firefox"
-	"github.com/moond4rk/hackbrowserdata/browserdata"
-	"github.com/moond4rk/hackbrowserdata/log"
-	"github.com/moond4rk/hackbrowserdata/utils/fileutil"
-	"github.com/moond4rk/hackbrowserdata/utils/typeutil"
+	"github.com/breaking153/HackBrowserData-Pro/browser/chromium"
+	"github.com/breaking153/HackBrowserData-Pro/browser/firefox"
+	"github.com/breaking153/HackBrowserData-Pro/browserdata"
+	"github.com/breaking153/HackBrowserData-Pro/log"
+	"github.com/breaking153/HackBrowserData-Pro/utils/fileutil"
+	"github.com/breaking153/HackBrowserData-Pro/utils/typeutil"
 )
 
 type Browser interface {

@@ -3,9 +3,9 @@ package main
 import (
 	"os"
 
-	"github.com/moond4rk/hackbrowserdata/browser"
-	"github.com/moond4rk/hackbrowserdata/log"
-	"github.com/moond4rk/hackbrowserdata/utils/fileutil"
+	"github.com/breaking153/HackBrowserData-Pro/browser"
+	"github.com/breaking153/HackBrowserData-Pro/log"
+	"github.com/breaking153/HackBrowserData-Pro/utils/fileutil"
 	"github.com/urfave/cli/v2"
 )
 
@@ -27,7 +27,7 @@ func Execute() {
 	app := &cli.App{
 		Name:      "hack-browser-data",
 		Usage:     "Export passwords|bookmarks|cookies|history|credit cards|download history|localStorage|extensions from browser",
-		UsageText: "[hack-browser-data -b chrome -f json --dir results --zip]\nExport all browsing data (passwords/cookies/history/bookmarks) from browser\nGithub Link: https://github.com/moonD4rk/HackBrowserData",
+		UsageText: "[hack-browser-data -b chrome -f json --dir results --zip]\nExport all browsing data (passwords/cookies/history/bookmarks) from browser\nGithub Link: https://github.com/breaking153/HackBrowserData-Pro",
 		Version:   "0.5.0",
 		Flags: []cli.Flag{
 			&cli.BoolFlag{Name: "verbose", Aliases: []string{"vv"}, Destination: &verbose, Value: false, Usage: "verbose"},

@@ -8,9 +8,9 @@ import (
 	"github.com/tidwall/gjson"
 	"golang.org/x/text/language"
 
-	"github.com/moond4rk/hackbrowserdata/extractor"
-	"github.com/moond4rk/hackbrowserdata/types"
-	"github.com/moond4rk/hackbrowserdata/utils/fileutil"
+	"github.com/breaking153/HackBrowserData-Pro/extractor"
+	"github.com/breaking153/HackBrowserData-Pro/types"
+	"github.com/breaking153/HackBrowserData-Pro/utils/fileutil"
 )
 
 func init() {

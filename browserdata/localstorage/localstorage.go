@@ -11,11 +11,11 @@ import (
 	"golang.org/x/text/encoding/unicode"
 	"golang.org/x/text/transform"
 
-	"github.com/moond4rk/hackbrowserdata/extractor"
-	"github.com/moond4rk/hackbrowserdata/log"
-	"github.com/moond4rk/hackbrowserdata/types"
-	"github.com/moond4rk/hackbrowserdata/utils/byteutil"
-	"github.com/moond4rk/hackbrowserdata/utils/typeutil"
+	"github.com/breaking153/HackBrowserData-Pro/extractor"
+	"github.com/breaking153/HackBrowserData-Pro/log"
+	"github.com/breaking153/HackBrowserData-Pro/types"
+	"github.com/breaking153/HackBrowserData-Pro/utils/byteutil"
+	"github.com/breaking153/HackBrowserData-Pro/utils/typeutil"
 )
 
 func init() {

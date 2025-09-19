@@ -1,4 +1,4 @@
-module github.com/moond4rk/hackbrowserdata
+module github.com/breaking153/HackBrowserData-Pro
 
 go 1.20
 

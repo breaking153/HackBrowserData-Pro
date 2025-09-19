@@ -1,7 +1,7 @@
 package log
 
 import (
-	"github.com/moond4rk/hackbrowserdata/log/level"
+	"github.com/breaking153/HackBrowserData-Pro/log/level"
 )
 
 var (

@@ -3,7 +3,7 @@
 package browser
 
 import (
-	"github.com/moond4rk/hackbrowserdata/types"
+	"github.com/breaking153/HackBrowserData-Pro/types"
 )
 
 var (

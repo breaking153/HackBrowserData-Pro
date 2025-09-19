@@ -1,7 +1,7 @@
 package extractor
 
 import (
-	"github.com/moond4rk/hackbrowserdata/types"
+	"github.com/breaking153/HackBrowserData-Pro/types"
 )
 
 var extractorRegistry = make(map[types.DataType]func() Extractor)

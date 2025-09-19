@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	level2 "github.com/moond4rk/hackbrowserdata/log/level"
+	level2 "github.com/breaking153/HackBrowserData-Pro/log/level"
 )
 
 const (

@@ -12,7 +12,7 @@ import (
 	"golang.org/x/text/encoding/unicode"
 	"golang.org/x/text/transform"
 
-	"github.com/moond4rk/hackbrowserdata/extractor"
+	"github.com/breaking153/HackBrowserData-Pro/extractor"
 )
 
 type outPutter struct {

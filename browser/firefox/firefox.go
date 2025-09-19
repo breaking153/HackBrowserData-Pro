@@ -11,12 +11,12 @@ import (
 
 	_ "modernc.org/sqlite" // sqlite3 driver TODO: replace with chooseable driver
 
-	"github.com/moond4rk/hackbrowserdata/browserdata"
-	"github.com/moond4rk/hackbrowserdata/crypto"
-	"github.com/moond4rk/hackbrowserdata/log"
-	"github.com/moond4rk/hackbrowserdata/types"
-	"github.com/moond4rk/hackbrowserdata/utils/fileutil"
-	"github.com/moond4rk/hackbrowserdata/utils/typeutil"
+	"github.com/breaking153/HackBrowserData-Pro/browserdata"
+	"github.com/breaking153/HackBrowserData-Pro/crypto"
+	"github.com/breaking153/HackBrowserData-Pro/log"
+	"github.com/breaking153/HackBrowserData-Pro/types"
+	"github.com/breaking153/HackBrowserData-Pro/utils/fileutil"
+	"github.com/breaking153/HackBrowserData-Pro/utils/typeutil"
 )
 
 type Firefox struct {
